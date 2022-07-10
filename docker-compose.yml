@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  web:
+    build: ./misskey
+    restart: unless-stopped
+    links:
+      - db
+      - redis
+#      - es
+    ports:
+      - "3000:3000"
+    networks:
+      - internal_network
+      - external_network
+    volumes:
+      - ./misskey/files:/misskey/files
+      - ./misskey/.config:/misskey/.config:ro
+      - ./hosts/hosts:/etc/hosts:ro
+
+  redis:
+    restart: unless-stopped
+    image: redis:4.0-alpine
+    networks:
+      - internal_network
+    volumes:
+      - ./misskey/redis:/data
+
+  db:
+    restart: unless-stopped
+    image: postgres:12.2-alpine
+    networks:
+      - internal_network
+    env_file:
+      - ./misskey/.config/docker.env
+    volumes:
+      - ./misskey/./db:/var/lib/postgresql/data
+
+#  es:
+#    restart: unless-stopped
+#    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.2
+#    environment:
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - "TAKE_FILE_OWNERSHIP=111"
+#    networks:
+#      - internal_network
+#    volumes:
+#      - ./elasticsearch:/usr/share/elasticsearch/data
+
+networks:
+  internal_network:
+    internal: true
+  external_network:
