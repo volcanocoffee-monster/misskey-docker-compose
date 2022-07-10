@@ -18,12 +18,14 @@ Edit `default.yml` and `docker.env` according to the instructions in the files.
 
 In the `default.yml`, the hosts that set with `localhost` from `Postgresql`/`Redis` should be set to `db`/`redis` respectively.
 ### Step 3: Building Misskey
+Note: make sure to be in /path/to/misskey-docker-compose not /path/to/misskey-docker-compose/misskey
 ```
 sudo docker-compose build
 sudo docker-compose run --rm web yarn run init
 
 ```
 ### Step 4: Launching
+Note: make sure to be in /path/to/misskey-docker-compose not /path/to/misskey-docker-compose/misskey
 ```
 sudo docker-compose up -d
 ```
