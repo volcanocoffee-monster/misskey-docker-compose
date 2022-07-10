@@ -1,0 +1,7 @@
+[submodule "misskey"]
+	path = misskey
+	url = https://github.com/volcanocoffee-monster/misskey.git
+[submodule "hosts"]
+	path = hosts
+	url = https://github.com/volcanocoffee-monster/hosts.git
+ 
